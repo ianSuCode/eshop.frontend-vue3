@@ -1,11 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import productRoutes from './product.routes'
+
+import Home from '../views/Home.vue'
+import productRoutes from './productRoutes'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   linkActiveClass: 'active',
+  linkExactActiveClass: 'exact-active',
   routes: [
-    { ...productRoutes },
+    { path: '/', component: Home }, 
+    { ...productRoutes }
   ]
 })
 

@@ -16,7 +16,7 @@ defineProps({
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 h1 {
   font-weight: 500;
   font-size: 2.6rem;
@@ -31,6 +31,15 @@ h3 {
 @media (max-width: 1024px) {
   .greetings {
     line-height: 0.6;
+
+    h1 {
+      font-size: 1.6rem;
+    }
+
+    h3 {
+      font-size: 1rem;
+    }
   }
+
 }
 </style>
