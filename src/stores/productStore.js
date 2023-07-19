@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia'
 
-export const useProductStore = defineStore('product', {
-  state: () => {
-    return {
-      product: null
+export default defineStore('product', {
+  state: () => ({ product: null }),
+  actions: {
+    memo(product) {
+      this.product = product
     }
   }
 })

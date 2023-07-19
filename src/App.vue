@@ -1,18 +1,26 @@
 <script setup>
-
+import { inject } from 'vue'
 import { RouterView } from 'vue-router'
+import { storeToRefs } from 'pinia'
+
 import HelloWorld from './components/HelloWorld.vue'
+import Alert from './components/Alert.vue'
+import useAuthStore from '@/stores/authStore'
 
+const apiUrl = inject('webConfig')?.['apiUrl']
 
-const handleClickLogin = () => {
-  alert('working on it')
+const { accessToken, userInfo } = storeToRefs(useAuthStore())
+
+const handleLogout = async () => {
+  accessToken.value = null
+  userInfo.value = null
+  await fetch(`${apiUrl}/auth/logout`, { method: 'POST', credentials: 'include' })
 }
 </script>
 
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" />
-
     <div class="wrapper">
       <HelloWorld msg="iansucode.eshop" />
     </div>
@@ -21,10 +29,11 @@ const handleClickLogin = () => {
       <span> | </span>
       <router-link to="/product/list">Products</router-link>
       <span> | </span>
-      <button class="link-btn green" @click="handleClickLogin"><span>Login</span></button>
+      <router-link to="/auth/login" v-if="!accessToken">Login</router-link>
+      <button v-if="accessToken" @click="handleLogout" class="link green">Logout</button>
     </div>
+    <Alert />
   </header>
-
   <main>
     <RouterView />
   </main>
@@ -35,6 +44,7 @@ header {
   line-height: 1.5;
   display: flex;
   place-items: center;
+  position: relative;
 
   .wrapper {
     display: flex;

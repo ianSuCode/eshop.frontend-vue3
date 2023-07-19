@@ -1,11 +1,11 @@
 <script setup>
 import { ref, onMounted, inject, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useProductStore } from '@/stores/productStore'
+import useProductStore from '@/stores/productStore'
 
 const route = useRoute()
 const router = useRouter()
-const productStore = useProductStore()
+const { memo } = useProductStore()
 
 const selectCategoryId = ref(null)
 const categories = ref(null)
@@ -27,7 +27,7 @@ watchEffect(async () => {
 });
 
 const handleClickProduct = (product) => {
-  productStore.product = product
+  memo(product)
   router.push(`/product/${product.id}`)
 }
 
@@ -45,7 +45,7 @@ const handleClickProduct = (product) => {
     <div class="products">
       <div v-for="product in products">
         <div>
-          <button class="link-btn green" @click="() => handleClickProduct(product)">
+          <button class="link green" @click="() => handleClickProduct(product)">
             <h2>{{ product.name }}</h2>
           </button>
         </div>
