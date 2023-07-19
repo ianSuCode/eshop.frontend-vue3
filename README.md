@@ -1,29 +1,10 @@
 # iansucode.eshop.frontend-vue3
 
-This template should help get you started developing with Vue 3 in Vite.
+A frontend web created by Vue 3 + Vite, using Pinia & Vue-Router.
 
-## Recommended IDE Setup
+## Features
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+* Read the REST API by loading the configuration file, without hardcoding the REST API URL into the program.
+* Prior to app.mount('#app'), check if the configuration file is available, and then determine if a connection to the REST API can be established.
 
-## Customize configuration
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
