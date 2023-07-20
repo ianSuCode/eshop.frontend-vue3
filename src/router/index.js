@@ -4,7 +4,7 @@ import Home from '../views/Home.vue'
 import productRoutes from './productRoutes'
 import authRoute from './authRoute'
 
-const router = createRouter({
+export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   linkActiveClass: 'active',
   linkExactActiveClass: 'exact-active',

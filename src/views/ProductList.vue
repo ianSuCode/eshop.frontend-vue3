@@ -1,18 +1,18 @@
 <script setup>
-import { ref, onMounted, inject, watchEffect } from 'vue'
+import { ref, onMounted, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import useProductStore from '@/stores/productStore'
 
 const route = useRoute()
 const router = useRouter()
-const { memo } = useProductStore()
+const { selected } = useProductStore()
 
 const selectCategoryId = ref(null)
 const categories = ref(null)
 const products = ref(null)
 
-const apiUrl = inject('webConfig')?.['apiUrl']
-const imgUrl = apiUrl.replace('api', '')
+const baseUrl = import.meta.env.VITE_API_URL
+const apiUrl = `${baseUrl}/api`
 
 onMounted(async () => {
   const res = await fetch(`${apiUrl}/category`)
@@ -27,7 +27,7 @@ watchEffect(async () => {
 });
 
 const handleClickProduct = (product) => {
-  memo(product)
+  selected(product)
   router.push(`/product/${product.id}`)
 }
 
@@ -50,7 +50,7 @@ const handleClickProduct = (product) => {
           </button>
         </div>
         <div>
-          <img :src="imgUrl + product.imageUrl" />
+          <img :src="`${baseUrl}/${product.imageUrl}`" />
           <span>$ {{ product.price }}</span>
         </div>
       </div>

@@ -1,6 +1,6 @@
     
 <script setup>
-import { ref, onMounted, inject } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import useProductStore from '@/stores/productStore'
 
@@ -8,8 +8,8 @@ const route = useRoute()
 const productStore = useProductStore()
 const product = ref(productStore.product)
 
-const apiUrl = inject('webConfig')?.['apiUrl']
-const imgUrl = apiUrl.replace('api', '')
+const baseUrl = import.meta.env.VITE_API_URL
+const apiUrl = `${baseUrl}/api`
 
 onMounted(async () => {
   if (!product.value) {
@@ -26,12 +26,11 @@ onMounted(async () => {
     <router-link to="../product/list">Product List</router-link>
     <div v-if="product">
       <h1>{{ product.name }}</h1>
-      <img :src="imgUrl + product.imageUrl" />
+      <img :src="`${baseUrl}/${product.imageUrl}`" />
       <p>{{ product.description }}</p>
       <span>$ {{ product.price }}</span>
     </div>
   </div>
 </template>
-
 
 <style lang="scss" scoped></style>

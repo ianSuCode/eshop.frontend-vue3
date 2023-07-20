@@ -1,34 +1,14 @@
 <script setup>
-import { ref, inject } from 'vue'
-import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
 import LoginForm from '../components/LoginForm.vue'
-import useAlertStore from '@/stores/alertStore'
 import useAuthStore from '@/stores/authStore'
 
 const email = ref('admin@iansucode.com')
 const password = ref('admin')
-
-const apiUrl = inject('webConfig')?.['apiUrl']
-const { warn } = useAlertStore()
-const { accessToken, userInfo } = storeToRefs(useAuthStore())
+const authStore = useAuthStore()
 
 const handleSubmit = async () => {
-  const option = {
-    method: 'POST',
-    credentials: 'include', // make browser send cookies to server or save cookies
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email: email.value, password: password.value }),
-  }
-  const res = await fetch(`${apiUrl}/auth/login`, option)
-  const result = await res.json()
-
-  if (res.status !== 200) {
-    warn(result.message)
-  }
-  else {
-    accessToken.value = result.accessToken
-    userInfo.value = result.userInfo
-  }
+  await authStore.login(email, password)
 }
 </script>
 <template>

@@ -1,20 +1,13 @@
 <script setup>
-import { inject } from 'vue'
 import { RouterView } from 'vue-router'
-import { storeToRefs } from 'pinia'
-
 import HelloWorld from './components/HelloWorld.vue'
 import Alert from './components/Alert.vue'
 import useAuthStore from '@/stores/authStore'
 
-const apiUrl = inject('webConfig')?.['apiUrl']
-
-const { accessToken, userInfo } = storeToRefs(useAuthStore())
+const authStore = useAuthStore()
 
 const handleLogout = async () => {
-  accessToken.value = null
-  userInfo.value = null
-  await fetch(`${apiUrl}/auth/logout`, { method: 'POST', credentials: 'include' })
+  await authStore.logout()
 }
 </script>
 
@@ -29,8 +22,8 @@ const handleLogout = async () => {
       <span> | </span>
       <router-link to="/product/list">Products</router-link>
       <span> | </span>
-      <router-link to="/auth/login" v-if="!accessToken">Login</router-link>
-      <button v-if="accessToken" @click="handleLogout" class="link green">Logout</button>
+      <router-link to="/auth/login" v-if="!authStore.accessToken">Login</router-link>
+      <button v-if="authStore.accessToken" @click="handleLogout" class="link green">Logout</button>
     </div>
     <Alert />
   </header>

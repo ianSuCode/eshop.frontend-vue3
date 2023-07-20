@@ -2,15 +2,16 @@
 import { storeToRefs } from 'pinia'
 import useAlertStore from '@/stores/alertStore'
 
-const { alert } = storeToRefs(useAlertStore())
+const alertStore = useAlertStore()
+const { alert } = storeToRefs(alertStore)
+
 </script>
 <template>
   <div v-if="alert" class="alert">
-    <p>{{ alert.message }}</p>
-    <button @click="() => alert = null" class="link">X</button>
+    <p>[{{ alert.type }}] {{ alert.message }}</p>
+    <button @click="alertStore.clear()" class="link">X</button>
   </div>
 </template>
-
 
 <style lang="scss" scoped>
 .alert {
