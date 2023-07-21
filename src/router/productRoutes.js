@@ -1,5 +1,5 @@
-import ProductList from '../views/ProductList.vue'
-import ProductDetail from '../views/ProductDetail.vue'
+import ProductList from '@/views/ProductList.vue'
+import ProductDetail from '@/views/ProductDetail.vue'
 
 export default {
   path: '/product',

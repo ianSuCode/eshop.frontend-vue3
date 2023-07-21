@@ -1,4 +1,5 @@
 <script setup>
+import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import Alert from './components/Alert.vue'
@@ -9,6 +10,12 @@ const authStore = useAuthStore()
 const handleLogout = async () => {
   await authStore.logout()
 }
+
+onMounted(async () => {
+  if (authStore.accessToken && !authStore.userInfo) {
+    await authStore.retrieveUserInfo()
+  }
+})
 </script>
 
 <template>
@@ -23,7 +30,11 @@ const handleLogout = async () => {
       <router-link to="/product/list">Products</router-link>
       <span> | </span>
       <router-link to="/auth/login" v-if="!authStore.accessToken">Login</router-link>
-      <button v-if="authStore.accessToken" @click="handleLogout" class="link green">Logout</button>
+      <template v-if="authStore.accessToken">
+        <router-link to="/cart">Cart</router-link>
+        <span> | </span>
+        <button v-if="authStore.accessToken" @click="handleLogout" class="link green">Logout</button>
+      </template>
     </div>
     <Alert />
   </header>

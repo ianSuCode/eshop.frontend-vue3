@@ -7,7 +7,7 @@ const apiUrl = `${import.meta.env.VITE_API_URL}/api`
 
 export default defineStore('auth', {
   state: () => ({
-    accessToken: null,
+    accessToken: localStorage.getItem('accessToken'),
     userInfo: null
   }),
   actions: {
@@ -15,7 +15,6 @@ export default defineStore('auth', {
       try {
         const option = {
           method: 'POST',
-          credentials: 'include', // make browser send cookies to server or save cookies
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: email.value, password: password.value })
         }
@@ -28,6 +27,7 @@ export default defineStore('auth', {
         } else {
           this.accessToken = result.accessToken
           this.userInfo = result.userInfo
+          localStorage.setItem('accessToken', result.accessToken)
           router.push('/')
         }
       } catch (error) {
@@ -35,13 +35,28 @@ export default defineStore('auth', {
         alertStore.error(error)
       }
     },
-    async logout() {
+    logout() {
       this.accessToken = null
       this.userInfo = null
-      await fetch(`${apiUrl}/auth/logout`, {
-        method: 'POST',
-        credentials: 'include'
-      })
+      localStorage.removeItem('accessToken')
+    },
+    async retrieveUserInfo() {
+      try {
+        const res = await fetch(
+          `${apiUrl}/auth/user-info/${this.accessToken}`
+        )
+        const result = await res.json()
+
+        if (res.status !== 200) {
+          const alertStore = useAlertStore()
+          alertStore.warning(result.message)
+        } else {
+          this.userInfo = result.userInfo
+        }
+      } catch (error) {
+        const alertStore = useAlertStore()
+        alertStore.error(error)
+      }
     }
   }
 })
