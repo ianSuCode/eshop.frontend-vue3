@@ -3,9 +3,12 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import useProductStore from '@/stores/productStore'
+import useAuthStore from '@/stores/authStore'
 
 const route = useRoute()
 const productStore = useProductStore()
+const authSotre = useAuthStore()
+
 const product = ref(productStore.product)
 
 const baseUrl = import.meta.env.VITE_API_URL
@@ -29,6 +32,9 @@ onMounted(async () => {
       <img :src="`${baseUrl}/${product.imageUrl}`" />
       <p>{{ product.description }}</p>
       <span>$ {{ product.price }}</span>
+      <div>
+        <button v-if="authSotre.accessToken" class="link green">Add to cart</button>
+      </div>
     </div>
   </div>
 </template>

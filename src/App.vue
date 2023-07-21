@@ -4,8 +4,10 @@ import { RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import Alert from './components/Alert.vue'
 import useAuthStore from '@/stores/authStore'
+import useCartStore from '@/stores/cartStore'
 
 const authStore = useAuthStore()
+const cartStore = useCartStore()
 
 const handleLogout = async () => {
   await authStore.logout()
@@ -14,6 +16,7 @@ const handleLogout = async () => {
 onMounted(async () => {
   if (authStore.accessToken && !authStore.userInfo) {
     await authStore.retrieveUserInfo()
+    await cartStore.retrieveItems()
   }
 })
 </script>
@@ -31,9 +34,12 @@ onMounted(async () => {
       <span> | </span>
       <router-link to="/auth/login" v-if="!authStore.accessToken">Login</router-link>
       <template v-if="authStore.accessToken">
-        <router-link to="/cart">Cart</router-link>
+        <router-link to="/cart">
+          <span>Cart</span>
+          <span> ({{ cartStore.items.length }})</span>
+        </router-link>
         <span> | </span>
-        <button v-if="authStore.accessToken" @click="handleLogout" class="link green">Logout</button>
+        <button @click="handleLogout" class="link green">Logout</button>
       </template>
     </div>
     <Alert />

@@ -1,14 +1,17 @@
 <script setup>
 import { ref } from 'vue'
 import LoginForm from '../components/LoginForm.vue'
-import useAuthStore from '@/stores/authStore'
+import useAuthStore from '../stores/authStore'
+import useCartStore from '../stores/cartStore'
 
 const email = ref('admin@iansucode.com')
 const password = ref('admin')
 const authStore = useAuthStore()
+const cartStore = useCartStore()
 
 const handleSubmit = async () => {
   await authStore.login(email, password)
+  await cartStore.retrieveItems()
 }
 </script>
 <template>
