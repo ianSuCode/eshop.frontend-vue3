@@ -22,8 +22,13 @@ a,
   transition: 0.4s;
 }
 
-input.red {
-  border-color: var(--main-red);
+.red {
+  border: 1px solid var(--main-red);
+  border-radius: 4px;
+}
+
+button {
+  cursor: pointer;
 }
 
 .link {

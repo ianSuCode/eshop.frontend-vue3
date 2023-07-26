@@ -37,7 +37,7 @@ const { alert } = storeToRefs(alertStore)
     }
 
     .type.error {
-      color: var(--main-error)
+      color: var(--main-red)
     }
   }
 

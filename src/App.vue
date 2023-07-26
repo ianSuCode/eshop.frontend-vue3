@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, computed } from 'vue'
 import { RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import Alert from './components/Alert.vue'
@@ -8,6 +8,7 @@ import useCartStore from '@/stores/cartStore'
 
 const authStore = useAuthStore()
 const cartStore = useCartStore()
+const isAdmin = computed(() => authStore.userInfo?.roles?.includes('Admin'))
 
 const handleLogout = async () => {
   await authStore.logout()
@@ -31,8 +32,12 @@ onMounted(async () => {
       <router-link to="/">Home</router-link>
       <span> | </span>
       <router-link to="/product/list">Products</router-link>
-      <span> | </span>
       <template v-if="authStore.accessToken">
+        <template v-if="isAdmin">
+          <span> | </span>
+          <router-link to="/admin">Admin</router-link>
+        </template>
+        <span> | </span>
         <router-link to="/cart">
           <span>Cart</span>
           <span> ({{ cartStore.items.length }})</span>
@@ -41,6 +46,7 @@ onMounted(async () => {
         <button @click="handleLogout" class="link green">Logout</button>
       </template>
       <template v-else>
+        <span> | </span>
         <router-link to="/user/signup">Signup</router-link>
         <span> | </span>
         <router-link to="/auth/login">Login</router-link>

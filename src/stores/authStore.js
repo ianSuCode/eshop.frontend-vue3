@@ -45,7 +45,7 @@ export default defineStore('auth', {
     async retrieveUserInfo() {
       try {
         const res = await fetch(`${apiUrl}/auth/user-info/${this.accessToken}`)
-        const result = await res.json()
+        const userInfo = await res.json()
 
         if (res.status === 403) {
           this.logout()
@@ -54,7 +54,7 @@ export default defineStore('auth', {
           const alertStore = useAlertStore()
           alertStore.warning(result.message)
         } else {
-          this.userInfo = result.userInfo
+          this.userInfo = userInfo
         }
       } catch (error) {
         const alertStore = useAlertStore()

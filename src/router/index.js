@@ -5,6 +5,7 @@ import productRoutes from './productRoutes'
 import authRoute from './authRoute'
 import cartRoute from './cartRoute'
 import userRoute from './userRoute'
+import adminRoute from './adminRoute'
 import useAuthStore from '../stores/authStore'
 
 export const router = createRouter({
@@ -17,6 +18,7 @@ export const router = createRouter({
     { ...authRoute },
     { ...cartRoute },
     { ...userRoute },
+    { ...adminRoute },
     {
       path: '/:pathMatch(.*)*',
       name: '404',
