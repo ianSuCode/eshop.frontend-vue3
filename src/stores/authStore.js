@@ -12,6 +12,7 @@ export default defineStore('auth', {
   }),
   actions: {
     async login(email, password) {
+      const alertStore = useAlertStore()
       try {
         const option = {
           method: 'POST',
@@ -22,16 +23,16 @@ export default defineStore('auth', {
         const result = await res.json()
 
         if (res.status !== 200) {
-          const alertStore = useAlertStore()
           alertStore.warning(result.message)
+          return false
         } else {
           this.accessToken = result.accessToken
           this.userInfo = result.userInfo
           localStorage.setItem('accessToken', result.accessToken)
-          router.push('/')
+          alertStore.clear()
+          return true
         }
       } catch (error) {
-        const alertStore = useAlertStore()
         alertStore.error(error)
       }
     },
@@ -43,9 +44,7 @@ export default defineStore('auth', {
     },
     async retrieveUserInfo() {
       try {
-        const res = await fetch(
-          `${apiUrl}/auth/user-info/${this.accessToken}`
-        )
+        const res = await fetch(`${apiUrl}/auth/user-info/${this.accessToken}`)
         const result = await res.json()
 
         if (res.status === 403) {

@@ -32,7 +32,6 @@ onMounted(async () => {
       <span> | </span>
       <router-link to="/product/list">Products</router-link>
       <span> | </span>
-      <router-link to="/auth/login" v-if="!authStore.accessToken">Login</router-link>
       <template v-if="authStore.accessToken">
         <router-link to="/cart">
           <span>Cart</span>
@@ -40,6 +39,11 @@ onMounted(async () => {
         </router-link>
         <span> | </span>
         <button @click="handleLogout" class="link green">Logout</button>
+      </template>
+      <template v-else>
+        <router-link to="/user/signup">Signup</router-link>
+        <span> | </span>
+        <router-link to="/auth/login">Login</router-link>
       </template>
     </div>
     <Alert />

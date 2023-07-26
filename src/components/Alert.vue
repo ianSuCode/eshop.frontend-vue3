@@ -1,14 +1,15 @@
 <script setup>
 import { storeToRefs } from 'pinia'
-import useAlertStore from '@/stores/alertStore'
+import useAlertStore from '../stores/alertStore'
 
 const alertStore = useAlertStore()
 const { alert } = storeToRefs(alertStore)
-
 </script>
 <template>
   <div v-if="alert" class="alert">
-    <p>[{{ alert.type }}] {{ alert.message }}</p>
+    <div>
+      <span><span class="type" :class="alert.type">[{{ alert.type }}]</span> {{ alert.message }}</span>
+    </div>
     <button @click="alertStore.clear()" class="link">X</button>
   </div>
 </template>
@@ -26,6 +27,18 @@ const { alert } = storeToRefs(alertStore)
 
   &> :first-child {
     flex: 1;
+
+    .type.success {
+      color: var(--main-green)
+    }
+
+    .type.warning {
+      color: var(--main-yellow)
+    }
+
+    .type.error {
+      color: var(--main-error)
+    }
   }
 
   button {

@@ -1,5 +1,12 @@
 @import './base.css';
 
+:root {
+  --main-red: hsla(340, 100%, 37%, 1);
+  --main-green: hsla(160, 100%, 37%, 1);
+  --main-lightgray: hsla(0, 0%, 70%, 1);
+  --main-yellow: hsla(60, 100%, 37%, 1);
+}
+
 #app {
   max-width: 1280px;
   margin: 0 auto;
@@ -11,8 +18,12 @@
 a,
 .green {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
+  color: var(--main-green);
   transition: 0.4s;
+}
+
+input.red {
+  border-color: var(--main-red);
 }
 
 .link {

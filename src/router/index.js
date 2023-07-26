@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import productRoutes from './productRoutes'
 import authRoute from './authRoute'
 import cartRoute from './cartRoute'
+import userRoute from './userRoute'
 import useAuthStore from '../stores/authStore'
 
 export const router = createRouter({
@@ -15,6 +16,7 @@ export const router = createRouter({
     { ...productRoutes },
     { ...authRoute },
     { ...cartRoute },
+    { ...userRoute },
     {
       path: '/:pathMatch(.*)*',
       name: '404',
