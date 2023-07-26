@@ -14,7 +14,7 @@ const handleLogout = async () => {
 }
 
 onMounted(async () => {
-  if (authStore.accessToken && !authStore.userInfo) {
+  if (authStore.accessToken) {
     await authStore.retrieveUserInfo()
     await cartStore.retrieveItems()
   }

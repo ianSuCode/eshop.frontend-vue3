@@ -1,34 +1,12 @@
 import { defineStore } from 'pinia'
 
-import useAuthStore from '../stores/authStore'
-
-const apiUrl = `${import.meta.env.VITE_API_URL}/api`
-
-const getBearer = () => {
-  const authStore = useAuthStore()
-  return `Bearer ${authStore.accessToken}`
-}
-
-const getFetchOption = (method, payload) => {
-  return {
-    method,
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: getBearer()
-    },
-    body: JSON.stringify(payload)
-  }
-}
+import fetchHelper from '../helpers/fetchHelper'
 
 export default defineStore('cart', {
   state: () => ({ items: [] }),
   actions: {
     async retrieveItems() {
-      const res = await fetch(`${apiUrl}/cart`, {
-        headers: { Authorization: getBearer() }
-      })
-      const result = await res.json()
-      this.items = result
+      this.items = await fetchHelper.get('cart')
     },
     async add(product) {
       const itemIndex = this.items.findIndex(
@@ -42,10 +20,7 @@ export default defineStore('cart', {
       } else {
         this.items.push({ product, count })
       }
-      await fetch(
-        `${apiUrl}/cart`,
-        getFetchOption('POST', { productId: product.id, count })
-      )
+      await fetchHelper.post('cart', { productId: product.id, count })
     },
     async changeCount(oldItem, count) {
       const itemIndex = this.items.findIndex(
@@ -55,17 +30,10 @@ export default defineStore('cart', {
         const item = this.items[itemIndex]
         this.items.splice(itemIndex, 1, { ...item, count: count })
 
-        await fetch(
-          `${apiUrl}/cart`,
-          getFetchOption('POST', { productId: item.product.id, count })
-        )
+        await fetchHelper.post('cart', { productId: item.product.id, count })
       } else {
         this.items.splice(itemIndex, 1)
-
-        await fetch(`${apiUrl}/cart/remove-product/${oldItem.product.id}`, {
-          method: 'DELETE',
-          headers: { Authorization: getBearer() }
-        })
+        await fetchHelper.delete(`cart/remove-product/${oldItem.product.id}`)
       }
     },
     clear() {
