@@ -36,7 +36,8 @@ export default defineStore('cart', {
         await fetchHelper.delete(`cart/remove-product/${oldItem.product.id}`)
       }
     },
-    clear() {
+    async clear() {
+      await fetchHelper.delete('cart/clear')
       this.items = []
     }
   }
