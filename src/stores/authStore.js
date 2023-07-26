@@ -39,6 +39,7 @@ export default defineStore('auth', {
       this.accessToken = null
       this.userInfo = null
       localStorage.removeItem('accessToken')
+      router.push('/')
     },
     async retrieveUserInfo() {
       try {
@@ -47,7 +48,10 @@ export default defineStore('auth', {
         )
         const result = await res.json()
 
-        if (res.status !== 200) {
+        if (res.status === 403) {
+          this.logout()
+          router.push('auth/login')
+        } else if (res.status !== 200) {
           const alertStore = useAlertStore()
           alertStore.warning(result.message)
         } else {
