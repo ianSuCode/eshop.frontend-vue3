@@ -18,11 +18,17 @@ const getFetchOption = (method, payload) => {
   }
 }
 
+const checkResponse = (res) => {
+  if (res.status >= 400)
+    throw Error(`${res.status} ${res.url} ${res.statusText}`)
+}
+
 export default {
   async get(path) {
     const res = await fetch(`${apiUrl}/${path}`, {
       headers: { Authorization: getBearer() }
     })
+    checkResponse(res)
     return await res.json()
   },
   async post(path, payload) {
@@ -30,12 +36,23 @@ export default {
       `${apiUrl}/${path}`,
       getFetchOption('POST', payload)
     )
+    checkResponse(res)
     return await res.json()
   },
-  async delete(path) {
-    await fetch(`${apiUrl}/${path}`, {
-      method: 'DELETE',
-      headers: { Authorization: getBearer() }
-    })
+  async patch(path, payload) {
+    const res = await fetch(
+      `${apiUrl}/${path}`,
+      getFetchOption('PATCH', payload)
+    )
+    checkResponse(res)
+    return await res.json()
+  },
+  async delete(path, payload) {
+    const res = await fetch(
+      `${apiUrl}/${path}`,
+      getFetchOption('DELETE', payload)
+    )
+    checkResponse(res)
+    return await res.json()
   }
 }

@@ -1,16 +1,28 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import useAlertStore from '../stores/alertStore'
 import fetchHelper from '../helpers/fetchHelper'
 const users = ref([])
+const alertStore = useAlertStore()
 onMounted(async () => {
   users.value = await fetchHelper.get('user')
 })
-const handleDeleteUser = (user) => {
-  console.log('todo: delete user', user.email)
+const handleDeleteUser = async user => {
+  try {
+    await fetchHelper.delete(`user`, { id: user.id })
+    users.value = users.value.filter(it => it.id !== user.id)
+  } catch (error) {
+    alertStore.error(error)
+  }
 }
 
-const handleAcitveChange = user => {
-  console.log('todo: change user active', user.email, user.active)
+const handleAcitveChange = async user => {
+  try {
+    await fetchHelper.patch('user/active', { id: user.id, active: !user.active })
+    user.active = !user.active
+  } catch (error) {
+    alertStore.error(error)
+  }
 }
 </script>
 <template>
