@@ -3,8 +3,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import productRoutes from './productRoutes'
 import authRoute from './authRoute'
-import cartRoute from './cartRoute'
 import userRoute from './userRoute'
+import cartRoute from './cartRoute'
+import accountRoute from './accountRoute'
 import adminRoute from './adminRoute'
 import useAuthStore from '../stores/authStore'
 
@@ -16,8 +17,9 @@ export const router = createRouter({
     { path: '/', component: Home },
     { ...productRoutes },
     { ...authRoute },
-    { ...cartRoute },
     { ...userRoute },
+    { ...cartRoute },
+    { ...accountRoute },
     { ...adminRoute },
     {
       path: '/:pathMatch(.*)*',

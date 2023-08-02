@@ -43,6 +43,8 @@ onMounted(async () => {
           <span> ({{ cartStore.items.length }})</span>
         </router-link>
         <span> | </span>
+        <router-link to="/account">Account</router-link>
+        <span> | </span>
         <button @click="handleLogout" class="link green">Logout</button>
       </template>
       <template v-else>
