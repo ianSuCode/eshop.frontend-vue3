@@ -5,8 +5,8 @@ import useAuthStore from '../stores/authStore'
 import useCartStore from '../stores/cartStore'
 import { router } from '../router'
 
-const email = ref('admin@iansucode.com')
-const password = ref('admin')
+const email = ref('')
+const password = ref('')
 const authStore = useAuthStore()
 const cartStore = useCartStore()
 

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
-import { router } from '@/router'
+import { router } from '../router'
 
-import useAlertStore from '@/stores/alertStore'
+import useAlertStore from '../stores/alertStore'
 
 const apiUrl = `${import.meta.env.VITE_API_URL}/api`
 
@@ -45,21 +45,15 @@ export default defineStore('auth', {
     async retrieveUserInfo() {
       try {
         const res = await fetch(`${apiUrl}/auth/user-info/${this.accessToken}`)
-        const userInfo = await res.json()
-
-        if (res.status === 403) {
-          this.logout()
-          router.push('auth/login')
-        } else if (res.status !== 200) {
-          const alertStore = useAlertStore()
-          alertStore.warning(result.message)
+        const result = await res.json()
+        if (res.status === 200) {
+          this.userInfo = result
         } else {
-          this.userInfo = userInfo
+          this.logout()
         }
       } catch (error) {
-        const alertStore = useAlertStore()
-        alertStore.error(error)
+        useAlertStore().error(error)
       }
-    }
+    },
   }
 })

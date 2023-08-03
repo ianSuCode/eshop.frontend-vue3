@@ -6,7 +6,7 @@ const { userInfo } = storeToRefs(useAuthStore())
 
 </script>
 <template>
-  <div>
+  <div v-if="userInfo">
     <div>
       <label>Email</label>
       <p>{{ userInfo.email }}</p>

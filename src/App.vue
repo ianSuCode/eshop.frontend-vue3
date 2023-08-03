@@ -15,10 +15,12 @@ const handleLogout = async () => {
 }
 
 onMounted(async () => {
-  if (authStore.accessToken) {
-    await authStore.retrieveUserInfo()
-    await cartStore.retrieveItems()
-  }
+  // Check if authStore has an accessToken and retrieve user info if it exists.
+  if (authStore.accessToken) await authStore.retrieveUserInfo()
+  
+  // If authStore still has an accessToken, retrieve cart items.
+  // Note that authStore.retrieveUserInfo() may clear the token under certain conditions.
+  if (authStore.accessToken) await cartStore.retrieveItems()
 })
 </script>
 

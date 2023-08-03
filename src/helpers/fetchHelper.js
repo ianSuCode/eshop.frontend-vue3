@@ -1,4 +1,5 @@
 import useAuthStore from '../stores/authStore'
+import useAlertStore from '../stores/alertStore'
 
 const apiUrl = `${import.meta.env.VITE_API_URL}/api`
 
@@ -19,8 +20,10 @@ const getFetchOption = (method, payload) => {
 }
 
 const checkResponse = (res) => {
-  if (res.status >= 400)
-    throw Error(`${res.status} ${res.url} ${res.statusText}`)
+  if (res.status === 401) { // Unauthorized
+    useAlertStore().warning('Unauthorized')
+    useAuthStore().logout()
+  }
 }
 
 export default {
