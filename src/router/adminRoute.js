@@ -1,5 +1,5 @@
 import Admin from '../views/Admin.vue'
-import Users from '../views/Users.vue'
+import AdminUsers from '../views/admin/AdminUsers.vue'
 import AdminOrders from '../views/admin/AdminOrders.vue'
 
 export default {
@@ -9,7 +9,7 @@ export default {
   children: [
     {
       path: 'users',
-      component: Users
+      component: AdminUsers
     },
     {
       path: 'orders',

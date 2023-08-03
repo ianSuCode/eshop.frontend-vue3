@@ -18,6 +18,7 @@ const dusplayDateTime = text => {
     <table class="orders">
       <thead>
         <tr>
+          <th>Id</th>
           <th>Name</th>
           <th>Price</th>
           <th>Count</th>
@@ -28,6 +29,7 @@ const dusplayDateTime = text => {
       </thead>
       <tbody>
         <tr v-for="order in orders">
+          <td>{{ order.id.substring(0, 6) + '...' }}</td>
           <td>
             <router-link :to="`/product/${order.productId}`">{{ order.product.name }}</router-link>
           </td>

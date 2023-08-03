@@ -29,11 +29,9 @@ const handleSubmit = async () => {
 
 <style lang="scss" scoped>
 .form {
-  background-color: var(--vt-c-indigo);
-
   &>h1 {
     text-align: center;
-    color: var(--vt-c-text-dark-1);
+    color: var(--main-yellow);
   }
 }
 </style>

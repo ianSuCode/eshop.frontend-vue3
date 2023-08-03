@@ -1,15 +1,20 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import useAlertStore from '../stores/alertStore'
-import fetchHelper from '../helpers/fetchHelper'
+import useAlertStore from '../../stores/alertStore'
+import fetchHelper from '../../helpers/fetchHelper'
 const users = ref([])
 const alertStore = useAlertStore()
+
+const dusplayDateTime = text => {
+  return text.substring(0, 19).replaceAll('-', '/').replace('T', ' ')
+}
+
 onMounted(async () => {
-  users.value = await fetchHelper.get('user')
+  users.value = await fetchHelper.get('admin/user')
 })
 const handleDeleteUser = async user => {
   try {
-    await fetchHelper.delete(`user`, { id: user.id })
+    await fetchHelper.delete(`admin/user/${user.id}`)
     users.value = users.value.filter(it => it.id !== user.id)
   } catch (error) {
     alertStore.error(error)
@@ -18,7 +23,7 @@ const handleDeleteUser = async user => {
 
 const handleAcitveChange = async user => {
   try {
-    await fetchHelper.patch('user/active', { id: user.id, active: !user.active })
+    await fetchHelper.patch('admin/user/active', { id: user.id, active: !user.active })
     user.active = !user.active
   } catch (error) {
     alertStore.error(error)
@@ -30,18 +35,17 @@ const handleAcitveChange = async user => {
     <h3>Users</h3>
     <table>
       <tr>
-        <td>Id</td>
         <td>Email</td>
         <td>Roles</td>
         <td>Created At</td>
         <td>Active</td>
+        <td>Orders</td>
         <td></td>
       </tr>
       <tr v-for="user in users" :key="user.id">
-        <td>{{ user.id }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.roles.join(',') }}</td>
-        <td>{{ user.createdAt }}</td>
+        <td>{{ dusplayDateTime(user.createdAt) }}</td>
         <td>
           <div class="switch-container">
             <input type="checkbox" :id="`toggle-switch-${user.id}`" class="toggle-input" :checked="user.active"
@@ -49,7 +53,12 @@ const handleAcitveChange = async user => {
             <label :for="`toggle-switch-${user.id}`" class="toggle-label"></label>
           </div>
         </td>
-        <td><button class="red" @click="() => handleDeleteUser(user)">Delete</button></td>
+        <td>
+          <ul>
+            <li v-for="order in user.orders">{{ order.id.substring(0, 6) + '... ' }} [{{ order.state }}]</li>
+          </ul>
+        </td>
+        <td><button @click="() => handleDeleteUser(user)">Delete</button></td>
       </tr>
     </table>
   </div>
@@ -66,6 +75,11 @@ td {
 table {
   width: 100%;
   border-collapse: collapse;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
 }
 
 /* Style for the container */

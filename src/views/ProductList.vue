@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import useProductStore from '@/stores/productStore'
-import useCartStore from '@/stores/cartStore'
-import useAuthStore from '@/stores/authStore'
+import useProductStore from '../stores/productStore'
+import useCartStore from '../stores/cartStore'
+import useAuthStore from '../stores/authStore'
 
 const route = useRoute()
 const router = useRouter()

@@ -2,8 +2,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import useProductStore from '@/stores/productStore'
-import useAuthStore from '@/stores/authStore'
+import useProductStore from '../stores/productStore'
+import useCartStore from '../stores/cartStore'
+import useAuthStore from '../stores/authStore'
 
 const route = useRoute()
 const productStore = useProductStore()
@@ -23,6 +24,10 @@ onMounted(async () => {
   }
 })
 
+const handleAddToCart = (product) => {
+  useCartStore().add(product)
+}
+
 </script>
 <template>
   <div>
@@ -33,7 +38,7 @@ onMounted(async () => {
       <p>{{ product.description }}</p>
       <span>$ {{ product.price }}</span>
       <div>
-        <button v-if="authSotre.accessToken" class="link green">Add to cart</button>
+        <button v-if="authSotre.accessToken" @click="() => handleAddToCart(product)" class="link green">Add to cart</button>
       </div>
     </div>
   </div>
