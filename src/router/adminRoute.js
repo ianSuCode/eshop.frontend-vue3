@@ -1,5 +1,6 @@
-import Admin from '@/views/Admin.vue'
-import Users from '@/views/Users.vue'
+import Admin from '../views/Admin.vue'
+import Users from '../views/Users.vue'
+import AdminOrders from '../views/admin/AdminOrders.vue'
 
 export default {
   path: '/admin',
@@ -9,6 +10,10 @@ export default {
     {
       path: 'users',
       component: Users
+    },
+    {
+      path: 'orders',
+      component: AdminOrders
     }
   ]
 }
