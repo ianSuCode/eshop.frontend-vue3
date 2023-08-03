@@ -23,7 +23,7 @@ export default defineStore('auth', {
         const result = await res.json()
 
         if (res.status !== 200) {
-          alertStore.warning(result.message)
+          alertStore.warning(result.message ?? 'Unauthorized')
           return false
         } else {
           this.accessToken = result.accessToken

@@ -13,7 +13,7 @@ const dusplayDateTime = text => {
 }
 
 const handleStateChange = async order => {
-  const result = await fetchHelper.patch('admin/order/change-state', {orderId: order.id, state: order.state})
+  const result = await fetchHelper.patch('admin/order/change-state', {id: order.id, state: order.state})
   order.updatedAt = result.updatedAt
 }
 

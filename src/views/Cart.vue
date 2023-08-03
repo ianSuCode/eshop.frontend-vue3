@@ -27,7 +27,7 @@ const handleClearAll = () => {
 
 const handleCheckout = async () => {
   if (checkedProductIds.value.length > 0) {
-    await fetchHelper.post('order', { productIds: checkedProductIds.value})
+    await fetchHelper.post('order', checkedProductIds.value)
     cartStore.items = cartStore.items.filter(it => !checkedProductIds.value.includes(it.product.id))
     checkedProductIds.value = []
   }
