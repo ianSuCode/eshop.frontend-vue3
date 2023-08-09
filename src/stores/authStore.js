@@ -20,12 +20,11 @@ export default defineStore('auth', {
           body: JSON.stringify({ email: email.value, password: password.value })
         }
         const res = await fetch(`${apiUrl}/auth/login`, option)
-        const result = await res.json()
-
-        if (res.status !== 200) {
-          alertStore.warning(result.message ?? 'Unauthorized')
+        if (res.status === 401) {
+          alertStore.warning('Unauthorized')
           return false
         } else {
+          const result = await res.json()
           this.accessToken = result.accessToken
           this.userInfo = result.userInfo
           localStorage.setItem('accessToken', result.accessToken)

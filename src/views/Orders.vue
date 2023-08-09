@@ -11,6 +11,11 @@ onMounted(async () => {
 const dusplayDateTime = text => {
   return text.substring(0, 19).replaceAll('-', '/').replace('T', ' ')
 }
+
+const displayId = id => {
+  if (typeof id === 'string' && id.length > 6 )  return id.substring(0, 6) + '...'
+  return id
+}
 </script>
 <template>
   <div>
@@ -29,7 +34,7 @@ const dusplayDateTime = text => {
       </thead>
       <tbody>
         <tr v-for="order in orders">
-          <td>{{ order.id.substring(0, 6) + '...' }}</td>
+          <td>{{ displayId(order.id) }}</td>
           <td>
             <router-link :to="`/product/${order.productId}`">{{ order.product.name }}</router-link>
           </td>

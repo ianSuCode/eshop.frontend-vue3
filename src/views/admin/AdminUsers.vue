@@ -9,6 +9,11 @@ const dusplayDateTime = text => {
   return text.substring(0, 19).replaceAll('-', '/').replace('T', ' ')
 }
 
+const displayId = id => {
+  if (typeof id === 'string' && id.length > 6 )  return id.substring(0, 6) + '...'
+  return id
+}
+
 onMounted(async () => {
   users.value = await fetchHelper.get('admin/user')
 })
@@ -55,7 +60,7 @@ const handleAcitveChange = async user => {
         </td>
         <td>
           <ul>
-            <li v-for="order in user.orders">{{ order.id.substring(0, 6) + '... ' }} [{{ order.state }}]</li>
+            <li v-for="order in user.orders">{{ displayId(order.id) }} [{{ order.state }}]</li>
           </ul>
         </td>
         <td><button @click="() => handleDeleteUser(user)">Delete</button></td>
