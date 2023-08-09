@@ -34,7 +34,6 @@ const handleAddToCart = (product) => {
     <router-link to="../product/list">Product List</router-link>
     <div v-if="product">
       <h1>{{ product.name }}</h1>
-      <img :src="`${baseUrl}/${product.imageUrl}`" />
       <p>{{ product.description }}</p>
       <span>$ {{ product.price }}</span>
       <div>

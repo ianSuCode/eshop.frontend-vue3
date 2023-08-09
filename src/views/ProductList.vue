@@ -58,7 +58,6 @@ const handleAddToCart = (product) => {
           </button>
         </div>
         <div class="product-body">
-          <img :src="`${baseUrl}/${product.imageUrl}`" />
           <span>$ {{ product.price }}</span>
         </div>
         <div class="product-foot">
