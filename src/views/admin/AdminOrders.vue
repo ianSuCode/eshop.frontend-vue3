@@ -84,9 +84,5 @@ table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-
-  thead {
-    background-color: var(--color-background-mute)
-  }
 }
 </style>

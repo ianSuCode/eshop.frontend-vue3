@@ -49,7 +49,7 @@ const handleCheckout = async () => {
         <span>Price</span>
         <span>Count</span>
       </div>
-      <div v-for="item in cartStore.items" :key="item.id">
+      <div v-for="item in cartStore.items" :key="item.product.id">
         <div>
           <input type="checkbox" :value="item.product.id" v-model="checkedProductIds"/>
         </div>

@@ -3,7 +3,7 @@
 A frontend web created by Vue 3 + Vite.
 + Vue-Router
 + Pinia
-+ JWT
++ Bearer Authentication
 + Roles and Permissions (Only users with the 'Admin' role can access/administer the Admin Dashboard)
 
 ## Features

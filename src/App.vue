@@ -30,32 +30,25 @@ onMounted(async () => {
     <div class="wrapper">
       <HelloWorld msg="iansucode.eshop" />
     </div>
-    <div class="actions">
+    <nav class="actions">
       <router-link to="/">Home</router-link>
-      <span> | </span>
       <router-link to="/product/list">Products</router-link>
       <template v-if="authStore.accessToken">
         <template v-if="isAdmin">
-          <span> | </span>
           <router-link to="/admin">Admin</router-link>
         </template>
-        <span> | </span>
         <router-link to="/cart">
           <span>Cart</span>
           <span> ({{ cartStore.items.length }})</span>
         </router-link>
-        <span> | </span>
         <router-link to="/account">Account</router-link>
-        <span> | </span>
-        <button @click="handleLogout" class="link green">Logout</button>
+        <a @click="handleLogout">Logout</a>
       </template>
       <template v-else>
-        <span> | </span>
         <router-link to="/user/signup">Signup</router-link>
-        <span> | </span>
         <router-link to="/auth/login">Login</router-link>
       </template>
-    </div>
+    </nav>
     <Alert />
   </header>
   <main>

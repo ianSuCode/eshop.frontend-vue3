@@ -39,32 +39,36 @@ const handleAcitveChange = async user => {
   <div>
     <h3>Users</h3>
     <table>
-      <tr>
-        <td>Email</td>
-        <td>Roles</td>
-        <td>Created At</td>
-        <td>Active</td>
-        <td>Orders</td>
-        <td></td>
-      </tr>
-      <tr v-for="user in users" :key="user.id">
-        <td>{{ user.email }}</td>
-        <td>{{ user.roles.join(',') }}</td>
-        <td>{{ dusplayDateTime(user.createdAt) }}</td>
-        <td>
-          <div class="switch-container">
-            <input type="checkbox" :id="`toggle-switch-${user.id}`" class="toggle-input" :checked="user.active"
-              @change="() => handleAcitveChange(user)" />
-            <label :for="`toggle-switch-${user.id}`" class="toggle-label"></label>
-          </div>
-        </td>
-        <td>
-          <ul>
-            <li v-for="order in user.orders">{{ displayId(order.id) }} [{{ order.state }}]</li>
-          </ul>
-        </td>
-        <td><button @click="() => handleDeleteUser(user)">Delete</button></td>
-      </tr>
+      <thead>
+        <tr>
+          <td>Email</td>
+          <td>Roles</td>
+          <td>Created At</td>
+          <td>Active</td>
+          <td>Orders</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="user in users" :key="user.id">
+          <td>{{ user.email }}</td>
+          <td>{{ user.roles.join(',') }}</td>
+          <td>{{ dusplayDateTime(user.createdAt) }}</td>
+          <td>
+            <div class="switch-container">
+              <input type="checkbox" :id="`toggle-switch-${user.id}`" class="toggle-input" :checked="user.active"
+                @change="() => handleAcitveChange(user)" />
+              <label :for="`toggle-switch-${user.id}`" class="toggle-label"></label>
+            </div>
+          </td>
+          <td>
+            <ul>
+              <li v-for="order in user.orders">{{ displayId(order.id) }} [{{ order.state }}]</li>
+            </ul>
+          </td>
+          <td><button @click="() => handleDeleteUser(user)">Delete</button></td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>

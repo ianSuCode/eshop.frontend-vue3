@@ -42,14 +42,13 @@ const handleAddToCart = (product) => {
 </script>
 <template>
   <div>
-    <div>
-      <router-link to="/product/list" :class="{ 'selected': !selectCategoryId }">All Categories</router-link>
+    <nav>
+      <router-link to="/product/list" :class="{ 'selected': !selectCategoryId }">All</router-link>
       <template v-for="category in categories" :key="category.id">
-        <span> | </span>
         <router-link :to="`/product/list?categoryId=${category.id}`"
           :class="{ 'selected': category.id === selectCategoryId }">{{ category.name }}</router-link>
       </template>
-    </div>
+    </nav>
     <div class="products">
       <div v-for="product in products" class="product-box">
         <div class="product-head">
@@ -71,6 +70,7 @@ const handleAddToCart = (product) => {
 
 <style lang="scss" scoped>
 .products {
+  margin-top: 1rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
@@ -78,11 +78,6 @@ const handleAddToCart = (product) => {
   >div.product-box {
     border: 1px solid var(--vt-c-text-dark-2);
     padding: 2px;
-
-    img {
-      width: 32px;
-      height: 32px;
-    }
 
     .product-foot {
       text-align: right;
