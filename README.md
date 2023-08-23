@@ -5,6 +5,7 @@ A frontend web created by Vue 3 + Vite.
 + Pinia
 + Bearer Authentication
 + Roles and Permissions (Only users with the 'Admin' role can access/administer the Admin Dashboard)
+![](https://iansucode.github.io/assets/eshop/eshop-vue.png)
 
 ## Features
 + User Registration: Users can sign up as new members and will await activation by an admin.
